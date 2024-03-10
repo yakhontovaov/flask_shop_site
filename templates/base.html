@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>
+        {% block title %}
+        New site
+        {% endblock %}
+    </title>
+</head>
+
+<body>
+<h1>New Site</h1>
+<div class="container-fluid">
+    <ul class="nav nav-pills justify-content-end align-items-end">
+        <li class="nav-item"><a href="/" class="nav-link">Home</a></li>
+        <li class="nav-item"><a href="/cloth/" class="nav-link">Cloth</a></li>
+        <li class="nav-item"><a href="/shoes" class="nav-link">Shoes</a></li>
+        <li class="nav-item"><a href="/accessories/" class="nav-link">Accessories</a></li>
+        <li class="nav-item"><a href="/about_us/" class="nav-link">About us</a></li>
+        <li class="nav-item"><a href="/contacts/" class="nav-link">Contacts</a></li>
+    </ul>
+        {% block content %}
+
+        {% endblock %}
+    <div>
+        <hr>
+        <p>2024 &copy;</p>
+    </div>
+</div>
+
+</body>
+</html>
