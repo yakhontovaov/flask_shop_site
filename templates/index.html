@@ -1,4 +1,17 @@
-{% extends 'base.html' %}
-{% block content %}
-    <p>ALL ABOUT THE NEW SITE</p>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Auth</title>
+</head>
+<body>
+    <h3>Enter your name and email</h3>
+    <form action="/welcome/" method="post">
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name"><br>
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email"><br>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
