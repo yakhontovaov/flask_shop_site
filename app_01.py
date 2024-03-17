@@ -1,6 +1,18 @@
-from flask import Flask, render_template, request, make_response, redirect, url_for
+from flask import Flask, render_template, request, make_response, redirect, url_for, flash
+from form_registr import RegistrationForm
+from models import db, User
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'your_secret_key'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///shop.db'
+
+db.init_app(app)
+
+
+@app.cli.command('init-db')
+def init_db():
+    db.create_all()
+    print('Ok')
 
 
 @app.route('/')
@@ -8,17 +20,22 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/welcome/', methods=['POST'])
-def welcome():
-    name = request.form.get('name')
-    email = request.form.get('email')
-
-    if name and email:
+@app.route('/register/', methods=['GET', 'POST'])
+def register():
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        user = User(first_name=form.first_name.data,
+                    last_name=form.last_name.data,
+                    email=form.email.data)
+        user.set_password(form.password.data)
+        db.session.add(user)
+        db.session.commit()
+        flash('Регистрация прошла успешно!', 'success')
         response = make_response(redirect(url_for('home')))
-        response.set_cookie('user_data', f'{name}:{email}')
+        response.set_cookie('user_data', '{}:{}'.format(form.first_name.data, form.last_name.data,
+                                                        form.email.data))
         return response
-    else:
-        return redirect(url_for('index'))
+    return render_template('register.html', form=form)
 
 
 @app.route('/home/')
