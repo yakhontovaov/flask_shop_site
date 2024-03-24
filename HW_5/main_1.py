@@ -9,7 +9,6 @@ from sqlalchemy.orm import sessionmaker
 app = FastAPI()
 templates = Jinja2Templates(directory="./HW_5/templates")
 
-# Создание базы данных
 DATABASE_URL = "sqlite:///users.db"
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
@@ -75,7 +74,7 @@ async def read_users(request: Request):
     users = db.query(User).all()
     return templates.TemplateResponse("index.html", {"request": request, "users": users})
 
-# Запуск сервера
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="127.0.0.1", port=8000)
